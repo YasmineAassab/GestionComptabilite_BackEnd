@@ -1,11 +1,10 @@
 package stage.sir.gestioncomptabilite.webService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import stage.sir.gestioncomptabilite.bean.Facture;
 import stage.sir.gestioncomptabilite.service.FactureService;
-import stage.sir.gestioncomptabilite.vo.ObjectVo;
+import stage.sir.gestioncomptabilite.vo.FactureVo;
 
 
 import java.util.List;
@@ -46,18 +45,23 @@ public class FactureProvided {
     public List<Facture> findAll() {
         return factureService.findAll();
     }
-
     @PutMapping("/")
-    public void update(@RequestBody Facture facture) {
-        factureService.update(facture);
+    public int update(@RequestBody Facture facture) {
+        return factureService.update(facture);
     }
 
     @PostMapping("/")
     public int save(@RequestBody Facture facture) {
         return factureService.save(facture);
     }
+
     @PostMapping("/MultiTache")
-    public List<Facture> findByMultiTache(@RequestBody ObjectVo objectVo) {
-        return factureService.findByMultiTache(objectVo);
+    public List<Facture> Journal(@RequestBody FactureVo objectVo) {
+        return factureService.Journal(objectVo);
+    }
+
+    @GetMapping("/societeSource/ice/{ice}/typeoperation/{typeoperation}")
+    public List<Facture> findBySocieteSourceIceAndTypeOperation(@PathVariable String ice,@PathVariable String typeoperation) {
+        return factureService.findBySocieteSourceIceAndTypeOperation(ice, typeoperation);
     }
 }
