@@ -9,6 +9,7 @@ import stage.sir.gestioncomptabilite.vo.FactureVo;
 
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -97,7 +98,8 @@ public class FactureService extends AbstractFacade<Facture>{
             facture.setDeclarationIR(null);
             facture.setDeclarationIS(null);
             facture.setDeclarationTva(null);
-            facture.setMontantTVA(facture.getTva().getValeur());
+            facture.setMontantTVA((facture.getMontantHorsTaxe() * facture.getTva().getValeur()) /100);
+            facture.setMontantTTC(facture.getMontantHorsTaxe() + facture.getMontantTVA());
             facture.setTrim(Trouvertrim(facture.getDateOperation()));
             facture.setMois(facture.getDateOperation().getMonth() +1);
             facture.setAnnee(facture.getDateOperation().getYear() + 1900);
@@ -153,10 +155,12 @@ public class FactureService extends AbstractFacade<Facture>{
         }
 
         else{
+
             facture.setDeclarationIR(null);
             facture.setDeclarationIS(null);
             facture.setDeclarationTva(null);
-            facture.setMontantTVA(facture.getTva().getValeur());
+            facture.setMontantTVA((facture.getMontantHorsTaxe() * facture.getTva().getValeur()) /100);
+            facture.setMontantTTC(facture.getMontantHorsTaxe() + facture.getMontantTVA());
             facture.setTrim(Trouvertrim(facture.getDateOperation()));
             facture.setMois(facture.getDateOperation().getMonth() +1);
             facture.setAnnee(facture.getDateOperation().getYear() + 1900);
