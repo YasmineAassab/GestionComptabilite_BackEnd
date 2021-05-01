@@ -1,5 +1,6 @@
 package stage.sir.gestioncomptabilite.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import stage.sir.gestioncomptabilite.bean.*;
@@ -156,27 +157,27 @@ public class DeclarationISService {
             double charge = 0;
             List<Facture> facturesC = factureService.findBySocieteSourceIceAndAnneeAndTypeOperation(declarationIS.getSociete().getIce(), declarationIS.getAnnee(), "credit");
             for (Facture f: facturesC){
-                    gain+= f.getMontantHorsTaxe();
+                gain+= f.getMontantHorsTaxe();
             }
             List<Facture> facturesD = factureService.findBySocieteSourceIceAndAnneeAndTypeOperation(declarationIS.getSociete().getIce(), declarationIS.getAnnee(), "debit");
             for (Facture f: facturesD){
-                    charge+= f.getMontantHorsTaxe();
+                charge+= f.getMontantHorsTaxe();
             }
             declarationIS.setTotalHTGain(gain);
             declarationIS.setTotalHTCharge(charge);
             declarationIS.setTotalHTDiff(declarationIS.getTotalHTGain()-declarationIS.getTotalHTCharge());
             declarationIS.setMontantISCalcule(calculMontantIS(declarationIS.getTotalHTDiff()));
-                if(declarationIS.getSociete().getAge() > 3){
-                    if (declarationIS.getMontantISCalcule() < 3000){
-                        declarationIS.setMontantISPaye(3000.0);
-                    }
-                    else{
-                        declarationIS.setMontantISPaye(declarationIS.getMontantISCalcule());
-                    }
+            if(declarationIS.getSociete().getAge() > 3){
+                if (declarationIS.getMontantISCalcule() < 3000){
+                    declarationIS.setMontantISPaye(3000.0);
                 }
                 else{
-                    declarationIS.setMontantISPaye(0.0);
+                    declarationIS.setMontantISPaye(declarationIS.getMontantISCalcule());
                 }
+            }
+            else{
+                declarationIS.setMontantISPaye(0.0);
+            }
             declarationISDao.save(declarationIS);
             List<Facture> factures = factureService.findBySocieteSourceIceAndAnnee(declarationIS.getSociete().getIce(), declarationIS.getAnnee());
             for (Facture f: factures){
