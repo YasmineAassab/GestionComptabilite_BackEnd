@@ -5,11 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import stage.sir.gestioncomptabilite.bean.DeclarationTva;
 import stage.sir.gestioncomptabilite.service.DeclarationTvaService;
+import stage.sir.gestioncomptabilite.vo.DeclarationTvaVo1;
+import stage.sir.gestioncomptabilite.vo.DeclarationTvaVo2;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("gestion-comptabilite/declarationtva")
 public class DeclarationTvaProvided {
 
@@ -59,6 +60,10 @@ public class DeclarationTvaProvided {
     @GetMapping("annee/{annee}/trim/{trim}/m2")
     public List<DeclarationTva> findByAnneeAndTrim(double annee, double trim) {
         return declarationTvaService.findByAnneeAndTrim(annee, trim);
+    }
+    @PostMapping("/findfacturesandcalcultva")
+    public DeclarationTvaVo2 findfacturesandcalcultva(@RequestBody DeclarationTvaVo1 declarationTvaVo1) {
+        return declarationTvaService.findfacturesandcalcultva(declarationTvaVo1);
     }
 
     @Autowired

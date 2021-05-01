@@ -10,7 +10,6 @@ import stage.sir.gestioncomptabilite.vo.FactureVo;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping(value = "gestion-comptabilite/facture")
 public class FactureProvided {
     @Autowired
@@ -41,6 +40,9 @@ public class FactureProvided {
     public List<Facture> findBySocieteSourceIceAndAnneeAndMoisAndTypeOperation(@PathVariable String ice, @PathVariable double annee,@PathVariable double mois,@PathVariable String typeoperation) {
         return factureService.findBySocieteSourceIceAndAnneeAndMoisAndTypeOperation(ice, annee, mois, typeoperation);
     }
+
+
+
     @GetMapping("/")
     public List<Facture> findAll() {
         return factureService.findAll();
@@ -63,5 +65,13 @@ public class FactureProvided {
     @GetMapping("/societeSource/ice/{ice}/typeoperation/{typeoperation}")
     public List<Facture> findBySocieteSourceIceAndTypeOperation(@PathVariable String ice,@PathVariable String typeoperation) {
         return factureService.findBySocieteSourceIceAndTypeOperation(ice, typeoperation);
+    }
+    @GetMapping("/societeSource/ice/{ice}/annee/{annee}")
+    public List<Facture> findBySocieteSourceIceAndAnnee(@PathVariable String ice, @PathVariable double annee) {
+        return factureService.findBySocieteSourceIceAndAnnee(ice, annee);
+    }
+    @GetMapping("/societeSource/ice/{ice}/annee/{annee}/typeoperation/{typeoperation}")
+    public List<Facture> findBySocieteSourceIceAndAnneeAndTypeOperation( @PathVariable String ice, @PathVariable double annee, @PathVariable String typeoperation) {
+        return factureService.findBySocieteSourceIceAndAnneeAndTypeOperation(ice, annee, typeoperation);
     }
 }
