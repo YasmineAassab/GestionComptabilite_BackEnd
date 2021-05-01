@@ -156,9 +156,6 @@ public class FactureService extends AbstractFacade<Facture>{
 
         else{
 
-            facture.setDeclarationIR(null);
-            facture.setDeclarationIS(null);
-            facture.setDeclarationTva(null);
             facture.setMontantTVA((facture.getMontantHorsTaxe() * facture.getTva().getValeur()) /100);
             facture.setMontantTTC(facture.getMontantHorsTaxe() + facture.getMontantTVA());
             facture.setTrim(Trouvertrim(facture.getDateOperation()));
